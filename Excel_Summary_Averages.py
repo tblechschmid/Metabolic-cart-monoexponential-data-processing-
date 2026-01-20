@@ -10,7 +10,7 @@ if not json_files:
     print("No JSON files found in 'out' folder.")
     exit()
 
-# --- Determine variable order from all runs in batch process ---
+# Determine variable order from all runs in batch process
 batch_order = []
 for json_file in json_files:
     with open(json_file, "r") as jf:
@@ -21,7 +21,7 @@ for json_file in json_files:
                     if k not in batch_order:
                         batch_order.append(k)  # Add unique keys in order
 
-# --- Collect all results ---
+# Collect all results
 all_results = []
 for json_file in json_files:
     with open(json_file, "r") as jf:
@@ -36,7 +36,7 @@ for json_file in json_files:
 # Create initial dataframe
 summary_df = pd.DataFrame(all_results)
 
-# --- DEBUG: check what files and extracted info look like ---
+# DEBUG: check what files and extracted info look like
 print(summary_df[['file']])  # check file names are loaded
 
 # Extract Trial_ID (e.g., 'MRS_01_V1_T2' from 'MRS_01_V1_T2_IC')
@@ -49,7 +49,7 @@ summary_df['Visit'] = summary_df['Trial_ID'].str.extract(r'(^.*?)(_V\d)')[1]  # 
 # Extract Trial Number (e.g., _T2, _T3)
 summary_df['Trial_Num'] = summary_df['Trial_ID'].str.extract(r'(_T\d)')[0]
 
-# --- DEBUG: check that extracted columns are correct ---
+# DEBUG: check that extracted columns are correct
 print(summary_df[['file', 'Trial_ID', 'Participant', 'Visit', 'Trial_Num']])
 
 
@@ -71,22 +71,22 @@ def pivot_and_group_by_visit(df, trial_filter=None):
                 ordered_cols.append(col_name)
     return pivot_df[ordered_cols]
 
-# --- 3-trial by visit averages (all trials) ---
+# 3-trial by visit averages (all trials)
 pivot_df = pivot_and_group_by_visit(summary_df)
 
-# --- T2_T3 averages ---
+# T2_T3 averages 
 t2t3_pivot = pivot_and_group_by_visit(summary_df, trial_filter=['_T2', '_T3'])
 
-# --- T1 by visit ---
+# T1 by visit
 t1_pivot = pivot_and_group_by_visit(summary_df, trial_filter=['_T1'])
 
-# --- T2 by visit ---
+# T2 by visit
 t2_pivot = pivot_and_group_by_visit(summary_df, trial_filter=['_T2'])
 
-# --- T3 by visit ---
+# T3 by visit
 t3_pivot = pivot_and_group_by_visit(summary_df, trial_filter=['_T3'])
 
-# --- Write all sheets to Excel ---
+# Write all sheets to Excel 
 output_file = "Kinetics_summary.xlsx"
 with pd.ExcelWriter(output_file, engine='openpyxl', mode='w') as writer:
     pivot_df.to_excel(writer, sheet_name='3-trial by visit', index=False)
@@ -96,3 +96,4 @@ with pd.ExcelWriter(output_file, engine='openpyxl', mode='w') as writer:
     t3_pivot.to_excel(writer, sheet_name='T3 by visit', index=False)
 
 print(f"Aggregated Excel file saved as '{output_file}'")
+
