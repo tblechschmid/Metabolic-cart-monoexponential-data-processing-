@@ -39,12 +39,6 @@ import Monoexponential_O2_pulse_off_kinetics
 import Smoothed_timepoints_9s
 import RER_graph_9p
 
-## For future use after revision of the scripts
-
-# import Monoexponential_RER_off_kinetics
-# import Monoexponential_RER_norm_VE_off_kinetics
-# import Monoexponential_RER_norm_VE_on_kinetics_9p
-
 # Define folders and paths
 data_folder = Path("data")  # Folder containing your Excel files
 results_folder = Path("out")
@@ -192,4 +186,5 @@ if __name__ == "__main__":
         print(f"❌ Error running Excel_Summary_Averages.py: {e}")
         
 print("Kinetics Analysis complete")
+
 
