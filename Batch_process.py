@@ -111,9 +111,6 @@ def process_file(file_path):
         ("Smoothed_timepoints_9s", Smoothed_timepoints_9s.run_smoothed_timpoints, ex_RER_df), # Reports values at each minute from 9-second smoothed data for all metabolic cart variables
         ("RER_graph_9p", RER_graph_9p.run_graph, RER_graph_df),
         
-        ## For future use
-        # ("Monoexponential_RER_norm_VE_on_kinetics_9p", Monoexponential_RER_norm_VE_on_kinetics_9p.run_kinetics, ex_RER_df),
-        # ("Monoexponential_RER_VE_CF_on_kinetics", Monoexponential_RER_VE_CF_on_kinetics.run_kinetics, ex_RER_df),
     ]
 
     # Run each module (i.e. the script and function) individually for each excel file with its own error handling
@@ -186,5 +183,6 @@ if __name__ == "__main__":
         print(f"❌ Error running Excel_Summary_Averages.py: {e}")
         
 print("Kinetics Analysis complete")
+
 
 
